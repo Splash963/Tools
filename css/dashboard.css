@@ -108,3 +108,42 @@ body {
     border-color: rgba(0, 242, 254, 0.4);
     box-shadow: 0 8px 32px rgba(0, 242, 254, 0.15);
 }
+
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: stretch;
+    padding: 2rem;
+}
+
+.card {
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.021);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4.7px);
+    -webkit-backdrop-filter: blur(4.7px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.5s ease;
+}
+
+.card-title {
+    color: #ffffff5e;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.card-text{
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 100;
+    font-family: 'Poppins';
+}
+
+.card:hover {
+    border-color: rgba(0, 242, 254, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 242, 254, 0.15);
+    transition: all 0.5s ease;
+    transform: translateY(-7px);
+}
