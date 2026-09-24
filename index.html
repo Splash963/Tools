@@ -60,10 +60,10 @@
                     <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#all">All</button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#converters">Laravel</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#laravel">Laravel</button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#generators">Docker</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#docker">Docker</button>
                 </li>
             </ul>
         </div>
@@ -72,8 +72,7 @@
             <div class="tab-pane fade show active" id="all">
                 <div class="card-list">
                     <a href="" class="scroll-reveal">
-                        <div class="card mb-3 tool-card" data-name="json formatter" data-category="converters"
-                            data-tags="json, format, beautify, minify" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="laravel artisan" data-category="laravel" data-tags="laravel, artisan, commands" style="max-width: 20rem;">
                             <div class="row g-0">
                                 <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-laravel-original colored" style="font-size: 4rem;"></i>
@@ -89,8 +88,7 @@
                     </a>
 
                     <a href="" class="scroll-reveal">
-                        <div class="card mb-3 tool-card" data-name="json formatter" data-category="converters"
-                            data-tags="json, format, beautify, minify" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker" data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
                             <div class="row g-0">
                                 <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-docker-plain colored" style="font-size: 4rem;"></i>
@@ -106,8 +104,7 @@
                     </a>
 
                     <a href="" class="scroll-reveal">
-                        <div class="card mb-3 tool-card" data-name="json formatter" data-category="converters"
-                            data-tags="json, format, beautify, minify" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="docker compose generator" data-category="docker" data-tags="docker, compose, generator" style="max-width: 20rem;">
                             <div class="row g-0">
                                 <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-docker-plain colored" style="font-size: 4rem;"></i>
@@ -124,11 +121,10 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="converters">
+            <div class="tab-pane fade" id="laravel">
                 <div class="card-list">
                     <a href="" class="scroll-reveal">
-                        <div class="card mb-3 tool-card" data-name="json formatter" data-category="converters"
-                            data-tags="json, format, beautify, minify" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="laravel artisan" data-category="laravel" data-tags="laravel, artisan, commands" style="max-width: 20rem;">
                             <div class="row g-0">
                                 <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-laravel-original colored" style="font-size: 4rem;"></i>
@@ -145,11 +141,10 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="generators">
+            <div class="tab-pane fade" id="docker">
                 <div class="card-list">
                     <a href="" class="scroll-reveal">
-                        <div class="card mb-3 tool-card" data-name="json formatter" data-category="converters"
-                            data-tags="json, format, beautify, minify" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker" data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
                             <div class="row g-0">
                                 <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-docker-plain colored" style="font-size: 4rem;"></i>
@@ -165,8 +160,7 @@
                     </a>
 
                     <a href="" class="scroll-reveal">
-                        <div class="card mb-3 tool-card" data-name="json formatter" data-category="converters"
-                            data-tags="json, format, beautify, minify" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="docker compose generator" data-category="docker" data-tags="docker, compose, generator" style="max-width: 20rem;">
                             <div class="row g-0">
                                 <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-docker-plain colored" style="font-size: 4rem;"></i>
@@ -232,102 +226,99 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const revealItems = document.querySelectorAll('.scroll-reveal, .nav-item');
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('toolSearch');
+            if (!searchInput) return;
 
-            const revealOnScroll = () => {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-visible');
-                            observer.unobserve(entry.target);
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            tabPanes.forEach((pane) => {
+                const emptyState = document.createElement('div');
+                emptyState.className = 'no-results';
+                emptyState.textContent = 'No matching tools found.';
+                emptyState.style.display = 'none';
+                pane.appendChild(emptyState);
+            });
+
+            function triggerReveal(item, delay = 0) {
+                if (!item) return;
+                item.classList.remove('is-visible', 'search-animate');
+                item.style.transitionDelay = `${delay}ms`;
+                void item.offsetWidth;
+                item.classList.add('is-visible', 'search-animate');
+            }
+
+            function refreshPaneReveal(pane) {
+                if (!pane) return;
+                const visibleItems = pane.querySelectorAll('.scroll-reveal');
+                visibleItems.forEach((item, index) => {
+                    const display = getComputedStyle(item).display;
+                    if (display !== 'none') {
+                        triggerReveal(item, index * 120);
+                    }
+                });
+            }
+
+            function getQueryMatch(card, query) {
+                const searchableText = [
+                    card.dataset.name || '',
+                    card.dataset.category || '',
+                    card.dataset.tags || '',
+                    card.textContent || ''
+                ].join(' ').toLowerCase();
+
+                return !query || searchableText.includes(query);
+            }
+
+            function filterCards() {
+                const query = (searchInput.value || '').trim().toLowerCase();
+
+                tabPanes.forEach((pane) => {
+                    const cards = pane.querySelectorAll('.tool-card');
+                    let visibleCount = 0;
+
+                    cards.forEach((card, index) => {
+                        const cardLink = card.closest('.scroll-reveal');
+                        const matches = getQueryMatch(card, query);
+
+                        if (cardLink) {
+                            const shouldShow = matches ? '' : 'none';
+                            cardLink.style.display = shouldShow;
+                            if (matches) {
+                                visibleCount += 1;
+                                triggerReveal(cardLink, index * 120);
+                            }
                         }
                     });
-                }, { threshold: 0.18 });
 
-                revealItems.forEach((item) => observer.observe(item));
-            };
-
-            if ('IntersectionObserver' in window) {
-                revealOnScroll();
-            } else {
-                revealItems.forEach((item) => item.classList.add('is-visible'));
+                    const emptyState = pane.querySelector('.no-results');
+                    if (emptyState) {
+                        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+                    }
+                });
             }
+
+            searchInput.addEventListener('input', filterCards);
 
             const tabButtons = document.querySelectorAll('.nav-link');
             tabButtons.forEach((button) => {
-                button.addEventListener('shown.bs.tab', () => {
+                button.addEventListener('shown.bs.tab', function () {
                     const activePane = document.querySelector(button.getAttribute('data-bs-target'));
                     if (activePane) {
-                        activePane.classList.remove('tab-fade-out');
-                        activePane.classList.add('tab-fade-in');
+                        setTimeout(() => refreshPaneReveal(activePane), 40);
                     }
+                    setTimeout(filterCards, 60);
                 });
             });
-        });
-    </script>
-</body>
 
-</html>
-
-
-
-    <script>
-        function copyDemoCode() {
-            const code = `FROM node:18-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm install\nEXPOSE 3000\nCMD ["npm", "start"]`;
-
-            // Clipboard copy function safe for modern web standard
-            const textArea = document.createElement("textarea");
-            textArea.value = code;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-
-            showToast();
-        }
-
-        function copyNotification() {
-            showToast("Ready to add your new snippet!");
-        }
-
-        function showToast(msg = "Copied to clipboard!") {
-            const toast = document.getElementById('toast');
-            toast.innerText = msg;
-            toast.classList.remove('opacity-0');
-            setTimeout(() => {
-                toast.classList.add('opacity-0');
-            }, 2000);
-        }
-
-
-        // Search functionality
-        const searchInput = document.getElementById('toolSearch');
-
-        searchInput.addEventListener('input', function () {
-            const query = this.value.toLowerCase().trim();
-
-            // Get all tool cards on the page
-            const allTools = document.querySelectorAll('.tool-card');
-
-            allTools.forEach(tool => {
-                const name = tool.dataset.name || '';
-                const tags = tool.dataset.tags || '';
-                const category = tool.dataset.category || '';
-
-                const searchableText = `${name} ${tags} ${category}`.toLowerCase();
-
-                if (query === '' || searchableText.includes(query)) {
-                    tool.style.display = '';           // show
-                } else {
-                    tool.style.display = 'none';      // hide
-                }
+            tabPanes.forEach((pane) => {
+                const firstReveal = pane.querySelectorAll('.scroll-reveal');
+                firstReveal.forEach((item, index) => triggerReveal(item, index * 120));
             });
+
+            setTimeout(filterCards, 50);
         });
-
     </script>
-
-    <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
