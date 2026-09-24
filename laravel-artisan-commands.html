@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laravel Artisan Commands</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .page-shell {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.2rem 4rem;
+        }
+
+        .command-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 1rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.4rem;
+        }
+
+        .command-card {
+            position: relative;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.25);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            animation: fadeUp 0.5s ease both;
+        }
+
+        .command-card:hover {
+            border-color: rgba(0, 242, 254, 0.38);
+            transform: translateY(-6px);
+            box-shadow: 0 24px 50px rgba(0, 242, 254, 0.12);
+        }
+
+        .command-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.9rem 1rem 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .traffic-lights {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            min-width: 78px;
+        }
+
+        .traffic-lights span {
+            display: inline-block;
+            width: 0.7rem;
+            height: 0.7rem;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: rgba(239, 68, 68, 0.9); }
+        .dot-yellow { background: rgba(251, 191, 36, 0.9); }
+        .dot-green { background: rgba(34, 197, 94, 0.9); }
+
+        .command-label {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.75);
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-left: 0.45rem;
+        }
+
+        .copy-btn {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #9ee9ff;
+            padding: 0.45rem 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: rgba(0, 242, 254, 0.08);
+            border-color: rgba(0, 242, 254, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .command-body {
+            padding: 1rem 1rem 1.1rem;
+        }
+
+        .command-badge {
+            display: inline-block;
+            margin-bottom: 0.8rem;
+            padding: 0.38rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.18);
+            color: #9ee9ff;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .command-card h3 {
+            margin: 0 0 0.6rem;
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .command-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 0.9rem;
+        }
+
+        .command-code {
+            margin: 0;
+            padding: 1rem;
+            border-radius: 14px;
+            background: rgba(8, 12, 22, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            overflow-x: auto;
+            color: #bff7ff;
+            font-size: 0.78rem;
+            line-height: 1.7;
+            font-family: 'Poppins', monospace;
+        }
+
+        .empty-state {
+            width: 100%;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .toast {
+            position: fixed;
+            right: 1.5rem;
+            bottom: 1.5rem;
+            background: rgba(0, 242, 254, 0.95);
+            color: #08111f;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            box-shadow: 0 18px 38px rgba(0, 242, 254, 0.25);
+            opacity: 0;
+            transform: translateY(12px);
+            pointer-events: none;
+            transition: all 0.25s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .command-topbar {
+                flex-wrap: wrap;
+            }
+
+            .copy-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="items">
+            <div class="title">
+                <img src="images/logo.jpg" class="logo" alt="Logo" />
+                <a href="index.html" class="logo-title">Splash Tools</a>
+            </div>
+            <div class="search ms-auto" id="navbarSupportedContent">
+                <input class="form-control search_bar" id="toolSearch" type="search" placeholder="Search Artisan Commands" aria-label="Search" />
+            </div>
+        </div>
+    </nav>
+
+    <main class="hero-shell flex-grow max-w-7xl mx-auto px-4 sm:px-8 py-12 flex flex-col justify-center items-center text-center">
+        <div class="floating-orb orb-one"></div>
+        <div class="floating-orb orb-two"></div>
+
+        <div class="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-xs font-semibold text-cyan-400 tracking-wider uppercase border border-cyan-500/30">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> Laravel Toolbox
+        </div>
+
+        <i class="devicon-laravel-original colored" style="font-size: 8rem;"></i>
+
+        <h5 class="text-4xl sm:text-5xl md:text-4xl font-extrabold text-white mb-4 leading-tight">
+            Laravel Artisan Commands
+        </h5>
+
+        <p class="max-w-3xl text-gray-400 text-base sm:text-lg mb-10 leading-relaxed">
+            A curated set of essential Laravel Artisan commands for Laravel apps, API setup, database setup, deployment helpers, and rapid development workflows.
+        </p>
+    </main>
+
+    <section class="page-shell">
+        <div class="command-count" id="commandCount">0 commands</div>
+        <div id="commandGrid" class="command-grid" aria-live="polite"></div>
+    </section>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo-wrap">
+                    <img src="images/logo.jpg" alt="Splash Tools logo" class="footer-logo" />
+                    <span>Splash Tools</span>
+                </div>
+                <p>Smart snippets and reusable developer tools for faster builds, cleaner deployments, and smoother workflows.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="#">Snippets</a>
+                <a href="#">Docs</a>
+                <a href="#">Contact</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Resources</h4>
+                <a href="#">Laravel</a>
+                <a href="#">Docker</a>
+                <a href="#">Shell</a>
+                <a href="#">API</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Support</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Help Center</a>
+                <a href="#">Feedback</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Splash Tools. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Twitter">X</a>
+                <a href="#" aria-label="GitHub">GitHub</a>
+                <a href="#" aria-label="LinkedIn">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const artisanCommands = [
+            {
+                title: 'Serve app',
+                category: 'Core',
+                description: 'Launch the Laravel development server on the default local port.',
+                command: 'php artisan serve',
+                tags: ['serve', 'local', 'dev', 'app']
+            },
+            {
+                title: 'List commands',
+                category: 'Core',
+                description: 'Display all available artisan commands and their descriptions.',
+                command: 'php artisan list',
+                tags: ['list', 'commands', 'help']
+            },
+            {
+                title: 'Make model',
+                category: 'Model',
+                description: 'Generate a new Eloquent model class.',
+                command: 'php artisan make:model Post',
+                tags: ['model', 'eloquent', 'generate']
+            },
+            {
+                title: 'Make model with migration',
+                category: 'Model',
+                description: 'Create a model and an associated migration file together.',
+                command: 'php artisan make:model Post -m',
+                tags: ['model', 'migration', 'database']
+            },
+            {
+                title: 'Make model with factory and migration',
+                category: 'Model',
+                description: 'Generate a model, migration, and factory for a new resource.',
+                command: 'php artisan make:model Post -mf',
+                tags: ['model', 'factory', 'migration']
+            },
+            {
+                title: 'Make controller',
+                category: 'Controller',
+                description: 'Create a basic controller class for handling requests.',
+                command: 'php artisan make:controller PostController',
+                tags: ['controller', 'request', 'generate']
+            },
+            {
+                title: 'Make API controller',
+                category: 'API',
+                description: 'Create a resource controller with only API methods.',
+                command: 'php artisan make:controller PostController --api',
+                tags: ['api', 'controller', 'resource']
+            },
+            {
+                title: 'Make resource controller',
+                category: 'API',
+                description: 'Generate a resource-style controller with CRUD methods.',
+                command: 'php artisan make:controller PostController --resource',
+                tags: ['resource', 'controller', 'crud']
+            },
+            {
+                title: 'Make migration',
+                category: 'Database',
+                description: 'Generate a migration file for your database schema updates.',
+                command: 'php artisan make:migration create_posts_table',
+                tags: ['migration', 'database', 'schema']
+            },
+            {
+                title: 'Make factory',
+                category: 'Database',
+                description: 'Create a factory for generating model data in tests or seeds.',
+                command: 'php artisan make:factory PostFactory --model=Post',
+                tags: ['factory', 'testing', 'seed']
+            },
+            {
+                title: 'Make seeder',
+                category: 'Database',
+                description: 'Generate a seeder to populate tables with sample records.',
+                command: 'php artisan make:seeder PostSeeder',
+                tags: ['seed', 'database', 'populate']
+            },
+            {
+                title: 'Run database seeder',
+                category: 'Database',
+                description: 'Seed the database using the default DatabaseSeeder class.',
+                command: 'php artisan db:seed',
+                tags: ['seed', 'database', 'populate']
+            },
+            {
+                title: 'Run specific seeder',
+                category: 'Database',
+                description: 'Execute one designated seeder class instead of the full set.',
+                command: 'php artisan db:seed --class=PostSeeder',
+                tags: ['seed', 'specific', 'database']
+            },
+            {
+                title: 'Migrate database',
+                category: 'Database',
+                description: 'Run pending migrations against the configured database.',
+                command: 'php artisan migrate',
+                tags: ['migrate', 'database', 'schema']
+            },
+            {
+                title: 'Migrate fresh',
+                category: 'Database',
+                description: 'Drop all tables and rerun all migrations from scratch.',
+                command: 'php artisan migrate:fresh',
+                tags: ['fresh', 'database', 'reset']
+            },
+            {
+                title: 'Migrate refresh',
+                category: 'Database',
+                description: 'Rollback and rerun all migrations to rebuild the schema.',
+                command: 'php artisan migrate:refresh',
+                tags: ['refresh', 'rollback', 'database']
+            },
+            {
+                title: 'Migrate rollback',
+                category: 'Database',
+                description: 'Rollback the most recent batch of migrations.',
+                command: 'php artisan migrate:rollback',
+                tags: ['rollback', 'migrate']
+            },
+            {
+                title: 'Migrate reset',
+                category: 'Database',
+                description: 'Rollback all database migrations for a fresh reset.',
+                command: 'php artisan migrate:reset',
+                tags: ['reset', 'rollback', 'database']
+            },
+            {
+                title: 'Make request',
+                category: 'Validation',
+                description: 'Create a custom form request for validation and authorization reuse.',
+                command: 'php artisan make:request StorePostRequest',
+                tags: ['request', 'validation', 'authorization']
+            },
+            {
+                title: 'Make resource',
+                category: 'API',
+                description: 'Generate a resource transformer for API responses.',
+                command: 'php artisan make:resource PostResource',
+                tags: ['resource', 'api', 'response']
+            },
+            {
+                title: 'Make policy',
+                category: 'Authorization',
+                description: 'Create a policy class linked to a model for authorization rules.',
+                command: 'php artisan make:policy PostPolicy --model=Post',
+                tags: ['policy', 'authorization', 'auth']
+            },
+            {
+                title: 'Make middleware',
+                category: 'HTTP',
+                description: 'Generate middleware to inspect and filter HTTP requests.',
+                command: 'php artisan make:middleware CheckRole',
+                tags: ['middleware', 'http', 'request']
+            },
+            {
+                title: 'Make event',
+                category: 'Events',
+                description: 'Create a new event class to signal application changes.',
+                command: 'php artisan make:event UserCreated',
+                tags: ['event', 'listener', 'dispatch']
+            },
+            {
+                title: 'Make listener',
+                category: 'Events',
+                description: 'Generate a listener which handles an emitted event.',
+                command: 'php artisan make:listener SendWelcomeEmail --event=UserCreated',
+                tags: ['listener', 'event', 'email']
+            },
+            {
+                title: 'Make job',
+                category: 'Queue',
+                description: 'Generate a job class for background processing.',
+                command: 'php artisan make:job ProcessCsvUpload',
+                tags: ['job', 'queue', 'background']
+            },
+            {
+                title: 'Queue table',
+                category: 'Queue',
+                description: 'Create the database table required for the queue system.',
+                command: 'php artisan queue:table',
+                tags: ['queue', 'database', 'jobs']
+            },
+            {
+                title: 'Queue work',
+                category: 'Queue',
+                description: 'Process queued jobs through Laravel’s queue worker.',
+                command: 'php artisan queue:work',
+                tags: ['queue', 'worker', 'jobs']
+            },
+            {
+                title: 'Queue restart',
+                category: 'Queue',
+                description: 'Restart queue workers without stopping active processes manually.',
+                command: 'php artisan queue:restart',
+                tags: ['queue', 'restart', 'worker']
+            },
+            {
+                title: 'Schedule run',
+                category: 'Console',
+                description: 'Run the scheduled tasks for the current minute immediately.',
+                command: 'php artisan schedule:run',
+                tags: ['schedule', 'cron', 'tasks']
+            },
+            {
+                title: 'Make command',
+                category: 'Console',
+                description: 'Generate a custom Artisan console command.',
+                command: 'php artisan make:command SendDailyReport',
+                tags: ['command', 'artisan', 'console']
+            },
+            {
+                title: 'Make test',
+                category: 'Testing',
+                description: 'Create a new feature or unit test class.',
+                command: 'php artisan make:test UserTest',
+                tags: ['test', 'feature', 'unit']
+            },
+            {
+                title: 'Make notification',
+                category: 'Messaging',
+                description: 'Generate a notification class for email, database, or SMS channels.',
+                command: 'php artisan make:notification InvoicePaid',
+                tags: ['notification', 'message', 'mail']
+            },
+            {
+                title: 'Make mail',
+                category: 'Messaging',
+                description: 'Build a mail class for sending formatted email notifications.',
+                command: 'php artisan make:mail WelcomeMail',
+                tags: ['mail', 'email', 'message']
+            },
+            {
+                title: 'Make observer',
+                category: 'Database',
+                description: 'Generate an observer for model lifecycle events.',
+                command: 'php artisan make:observer PostObserver --model=Post',
+                tags: ['observer', 'model', 'lifecycle']
+            },
+            {
+                title: 'Make cast',
+                category: 'Model',
+                description: 'Create a custom Eloquent cast class for attribute conversion.',
+                command: 'php artisan make:cast MoneyCast',
+                tags: ['cast', 'eloquent', 'attribute']
+            },
+            {
+                title: 'Make enum',
+                category: 'PHP',
+                description: 'Generate a new PHP enum for strong typed values.',
+                command: 'php artisan make:enum Status',
+                tags: ['enum', 'php', 'type']
+            },
+            {
+                title: 'Make class',
+                category: 'PHP',
+                description: 'Generate a reusable PHP class file in the app namespace.',
+                command: 'php artisan make:class UserService',
+                tags: ['class', 'php', 'service']
+            },
+            {
+                title: 'Route list',
+                category: 'Routing',
+                description: 'Display all registered routes in the application.',
+                command: 'php artisan route:list',
+                tags: ['routes', 'http', 'list']
+            },
+            {
+                title: 'Route cache',
+                category: 'Routing',
+                description: 'Compile the application routes into a cached file for faster loading.',
+                command: 'php artisan route:cache',
+                tags: ['route', 'cache', 'performance']
+            },
+            {
+                title: 'Route clear',
+                category: 'Routing',
+                description: 'Clear all cached routes from the application.',
+                command: 'php artisan route:clear',
+                tags: ['route', 'clear', 'cache']
+            },
+            {
+                title: 'Config cache',
+                category: 'Config',
+                description: 'Create a single cached configuration file to speed up boot time.',
+                command: 'php artisan config:cache',
+                tags: ['config', 'cache', 'performance']
+            },
+            {
+                title: 'Config clear',
+                category: 'Config',
+                description: 'Remove the cached configuration file and restore the normal config loading flow.',
+                command: 'php artisan config:clear',
+                tags: ['config', 'clear', 'cache']
+            },
+            {
+                title: 'View clear',
+                category: 'View',
+                description: 'Delete all compiled view files in storage.',
+                command: 'php artisan view:clear',
+                tags: ['view', 'clear', 'cache']
+            },
+            {
+                title: 'Cache clear',
+                category: 'Cache',
+                description: 'Clear the Laravel application cache and all cached data.',
+                command: 'php artisan cache:clear',
+                tags: ['cache', 'clear']
+            },
+            {
+                title: 'Optimize app',
+                category: 'Performance',
+                description: 'Optimize the application by caching config, routes, and views.',
+                command: 'php artisan optimize',
+                tags: ['optimize', 'cache', 'performance']
+            },
+            {
+                title: 'Key generate',
+                category: 'Security',
+                description: 'Generate a new application key for secure encryption values.',
+                command: 'php artisan key:generate',
+                tags: ['key', 'security', 'encryption']
+            },
+            {
+                title: 'Storage link',
+                category: 'Files',
+                description: 'Create a symbolic link from public/storage to storage/app/public.',
+                command: 'php artisan storage:link',
+                tags: ['storage', 'public', 'files']
+            },
+            {
+                title: 'App about',
+                category: 'Info',
+                description: 'Display a concise overview of the app environment and Laravel version.',
+                command: 'php artisan about',
+                tags: ['about', 'info', 'env']
+            },
+            {
+                title: 'Tinker shell',
+                category: 'Dev',
+                description: 'Open the interactive Laravel REPL for ad hoc debugging.',
+                command: 'php artisan tinker',
+                tags: ['tinker', 'debug', 'shell']
+            },
+            {
+                title: 'App down',
+                category: 'Maintenance',
+                description: 'Put the Laravel app into maintenance mode.',
+                command: 'php artisan down',
+                tags: ['down', 'maintenance', 'deploy']
+            },
+            {
+                title: 'App up',
+                category: 'Maintenance',
+                description: 'Bring the app back online after maintenance mode.',
+                command: 'php artisan up',
+                tags: ['up', 'maintenance', 'deploy']
+            },
+            {
+                title: 'Make API resource',
+                category: 'API',
+                description: 'Create a controller, request, resource, and factory together for an API entity.',
+                command: 'php artisan make:model Post -mf && php artisan make:resource PostResource && php artisan make:request StorePostRequest && php artisan make:controller PostController --api',
+                tags: ['api', 'resource', 'factory', 'request']
+            }
+        ];
+
+        const commandGrid = document.getElementById('commandGrid');
+        const countLabel = document.getElementById('commandCount');
+        const searchInput = document.getElementById('toolSearch');
+        const toast = document.getElementById('toast');
+
+        function showToast() {
+            if (!toast) return;
+            toast.classList.add('show');
+            clearTimeout(showToast.timeoutId);
+            showToast.timeoutId = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 1400);
+        }
+
+        function renderCommands(list) {
+            commandGrid.innerHTML = '';
+
+            if (!list.length) {
+                const empty = document.createElement('div');
+                empty.className = 'empty-state';
+                empty.textContent = 'No matching Laravel Artisan commands found.';
+                commandGrid.appendChild(empty);
+                countLabel.textContent = '0 commands';
+                return;
+            }
+
+            countLabel.textContent = `${list.length} commands`;
+
+            list.forEach((item, index) => {
+                const article = document.createElement('article');
+                article.className = 'command-card glass-card';
+                article.style.animationDelay = `${index * 60}ms`;
+
+                const topbar = document.createElement('div');
+                topbar.className = 'command-topbar';
+
+                const lights = document.createElement('div');
+                lights.className = 'traffic-lights';
+                lights.innerHTML = '<span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>';
+
+                const label = document.createElement('span');
+                label.className = 'command-label';
+                label.textContent = item.category;
+
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-btn';
+                copyButton.type = 'button';
+                copyButton.textContent = 'Copy';
+                copyButton.dataset.command = item.command;
+
+                const body = document.createElement('div');
+                body.className = 'command-body';
+
+                const badge = document.createElement('span');
+                badge.className = 'command-badge';
+                badge.textContent = item.category;
+
+                const h3 = document.createElement('h3');
+                h3.textContent = item.title;
+
+                const description = document.createElement('p');
+                description.textContent = item.description;
+
+                const pre = document.createElement('pre');
+                pre.className = 'command-code';
+                const code = document.createElement('code');
+                code.textContent = item.command;
+                pre.appendChild(code);
+
+                topbar.appendChild(lights);
+                topbar.appendChild(label);
+                topbar.appendChild(copyButton);
+
+                body.appendChild(badge);
+                body.appendChild(h3);
+                body.appendChild(description);
+                body.appendChild(pre);
+
+                article.appendChild(topbar);
+                article.appendChild(body);
+                commandGrid.appendChild(article);
+            });
+
+            bindCopyButtons();
+        }
+
+        function bindCopyButtons() {
+            document.querySelectorAll('.copy-btn').forEach((button) => {
+                button.addEventListener('click', async () => {
+                    const command = button.dataset.command;
+                    const oldText = button.textContent;
+
+                    try {
+                        await navigator.clipboard.writeText(command);
+                        button.textContent = 'Copied!';
+                        showToast();
+                    } catch (error) {
+                        const temp = document.createElement('textarea');
+                        temp.value = command;
+                        document.body.appendChild(temp);
+                        temp.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(temp);
+                        button.textContent = 'Copied!';
+                        showToast();
+                    }
+
+                    button.disabled = true;
+                    setTimeout(() => {
+                        button.disabled = false;
+                        button.textContent = oldText;
+                    }, 1200);
+                });
+            });
+        }
+
+        function filterCommands() {
+            const term = (searchInput.value || '').trim().toLowerCase();
+
+            if (!term) {
+                renderCommands(artisanCommands);
+                return;
+            }
+
+            const filtered = artisanCommands.filter((item) => {
+                const searchable = [
+                    item.title,
+                    item.category,
+                    item.description,
+                    item.command,
+                    ...(item.tags || [])
+                ].join(' ').toLowerCase();
+
+                return searchable.includes(term);
+            });
+
+            renderCommands(filtered);
+        }
+
+        searchInput.addEventListener('input', filterCommands);
+        renderCommands(artisanCommands);
+    </script>
+</body>
+
+</html>
