@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Compose Codes</title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Orbitron:wght@700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .page-shell {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 1.2rem 4rem;
+        }
+
+        .command-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.6rem 1rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.4rem;
+        }
+
+        .command-card {
+            position: relative;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.25);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            animation: fadeUp 0.5s ease both;
+        }
+
+        .command-card:hover {
+            border-color: rgba(0, 242, 254, 0.38);
+            transform: translateY(-6px);
+            box-shadow: 0 24px 50px rgba(0, 242, 254, 0.12);
+        }
+
+        .command-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.9rem 1rem 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .traffic-lights {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            min-width: 78px;
+        }
+
+        .traffic-lights span {
+            display: inline-block;
+            width: 0.7rem;
+            height: 0.7rem;
+            border-radius: 50%;
+        }
+
+        .dot-red {
+            background: rgba(239, 68, 68, 0.9);
+        }
+
+        .dot-yellow {
+            background: rgba(251, 191, 36, 0.9);
+        }
+
+        .dot-green {
+            background: rgba(34, 197, 94, 0.9);
+        }
+
+        .command-label {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.75);
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-left: 0.45rem;
+        }
+
+        .copy-btn {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #9ee9ff;
+            padding: 0.45rem 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: rgba(0, 242, 254, 0.08);
+            border-color: rgba(0, 242, 254, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .command-body {
+            padding: 1rem 1rem 1.1rem;
+        }
+
+        .command-badge {
+            display: inline-block;
+            margin-bottom: 0.8rem;
+            padding: 0.38rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid rgba(0, 242, 254, 0.18);
+            color: #9ee9ff;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .command-card h3 {
+            margin: 0 0 0.6rem;
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .command-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 0.9rem;
+        }
+
+        .command-code {
+            margin: 0;
+            padding: 1rem;
+            border-radius: 14px;
+            background: rgba(8, 12, 22, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            overflow-x: auto;
+            color: #bff7ff;
+            font-size: 0.78rem;
+            line-height: 1.7;
+            font-family: 'Poppins', monospace;
+        }
+
+        .empty-state {
+            width: 100%;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .toast {
+            position: fixed;
+            right: 1.5rem;
+            bottom: 1.5rem;
+            background: rgba(0, 242, 254, 0.95);
+            color: #08111f;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            box-shadow: 0 18px 38px rgba(0, 242, 254, 0.25);
+            opacity: 0;
+            transform: translateY(12px);
+            pointer-events: none;
+            transition: all 0.25s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .command-topbar {
+                flex-wrap: wrap;
+            }
+
+            .copy-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="items">
+            <div class="title">
+                <img src="images/logo.jpg" class="logo" alt="Logo" />
+                <a href="index.html" class="logo-title">Splash Tools</a>
+            </div>
+            <div class="search ms-auto" id="navbarSupportedContent">
+                <input class="form-control search_bar" id="toolSearch" type="search"
+                    placeholder="Search Docker Compose" aria-label="Search" />
+            </div>
+        </div>
+    </nav>
+
+    <main
+        class="hero-shell flex-grow max-w-7xl mx-auto px-4 sm:px-8 py-12 flex flex-col justify-center items-center text-center">
+        <div class="floating-orb orb-one"></div>
+        <div class="floating-orb orb-two"></div>
+
+        <div
+            class="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-xs font-semibold text-cyan-400 tracking-wider uppercase border border-cyan-500/30">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> Docker Toolbox
+        </div>
+
+        <i class="devicon-docker-plain colored" style="font-size: 8rem;"></i>
+
+        <h5 class="text-4xl sm:text-5xl md:text-4xl font-extrabold text-white mb-4 leading-tight">
+            Docker Compose Code
+        </h5>
+
+        <p class="max-w-3xl text-gray-400 text-base sm:text-lg mb-10 leading-relaxed">
+            A curated set of essential Docker Compose instructions for building and managing multi-container
+            applications.
+        </p>
+    </main>
+
+    <section class="page-shell">
+        <div class="command-count" id="commandCount">0 commands</div>
+        <div id="commandGrid" class="command-grid" aria-live="polite"></div>
+    </section>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo-wrap">
+                    <img src="images/logo.jpg" alt="Splash Tools logo" class="footer-logo" />
+                    <span>Splash Tools</span>
+                </div>
+                <p>Smart snippets and reusable developer tools for faster builds, cleaner deployments, and smoother
+                    workflows.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="#">Snippets</a>
+                <a href="#">Docs</a>
+                <a href="#">Contact</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Resources</h4>
+                <a href="#">Laravel</a>
+                <a href="#">Docker</a>
+                <a href="#">Shell</a>
+                <a href="#">API</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Support</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Help Center</a>
+                <a href="#">Feedback</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Splash Tools. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Twitter">X</a>
+                <a href="#" aria-label="GitHub">GitHub</a>
+                <a href="#" aria-label="LinkedIn">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        const artisanCommands = [
+            {
+                title: 'Laravel + Nginx + MySQL + phpMyAdmin',
+                category: 'Laravel',
+                description: 'A complete Laravel stack with PHP-FPM, Nginx, MySQL, and database UI.',
+                command: "version: '3.8'\n\nservices:\n  app:\n    build:\n      context: .\n      dockerfile: Dockerfile\n    container_name: laravel_app\n    working_dir: /var/www\n    volumes:\n      - ./:/var/www\n    environment:\n      DB_HOST: db\n      DB_DATABASE: laravel\n      DB_USERNAME: laravel\n      DB_PASSWORD: secret\n    depends_on:\n      - db\n      - redis\n    networks:\n      - laravel_net\n\n  web:\n    image: nginx:alpine\n    container_name: laravel_nginx\n    ports:\n      - \"8000:80\"\n    volumes:\n      - ./:/var/www\n      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf\n    depends_on:\n      - app\n    networks:\n      - laravel_net\n\n  db:\n    image: mysql:8.0\n    container_name: laravel_db\n    restart: unless-stopped\n    environment:\n      MYSQL_DATABASE: laravel\n      MYSQL_USER: laravel\n      MYSQL_PASSWORD: secret\n      MYSQL_ROOT_PASSWORD: root\n    ports:\n      - \"3306:3306\"\n    volumes:\n      - db_data:/var/lib/mysql\n    networks:\n      - laravel_net\n\n  phpmyadmin:\n    image: phpmyadmin/phpmyadmin\n    container_name: laravel_pma\n    restart: unless-stopped\n    ports:\n      - \"8080:80\"\n    environment:\n      PMA_HOST: db\n      MYSQL_ROOT_PASSWORD: root\n    depends_on:\n      - db\n    networks:\n      - laravel_net\n\n  redis:\n    image: redis:alpine\n    container_name: laravel_redis\n    ports:\n      - \"6379:6379\"\n    networks:\n      - laravel_net\n\nnetworks:\n  laravel_net:\n    driver: bridge\n\nvolumes:\n  db_data:",
+                tags: ['laravel', 'nginx', 'mysql', 'phpmyadmin', 'redis']
+            },
+            {
+                title: 'Laravel + Apache + MySQL + Redis',
+                category: 'Laravel',
+                description: 'Laravel app running with Apache, a MySQL service, and Redis cache support.',
+                command: "version: '3.8'\n\nservices:\n  app:\n    build:\n      context: .\n      dockerfile: Dockerfile\n    container_name: laravel_apache\n    ports:\n      - \"8000:80\"\n    working_dir: /var/www/html\n    volumes:\n      - ./:/var/www/html\n    environment:\n      APP_ENV: local\n      DB_CONNECTION: mysql\n      DB_HOST: db\n      DB_DATABASE: laravel\n      DB_USERNAME: laravel\n      DB_PASSWORD: secret\n      REDIS_HOST: redis\n    depends_on:\n      - db\n      - redis\n    networks:\n      - laravel_net\n\n  db:\n    image: mysql:8.0\n    container_name: laravel_db\n    restart: unless-stopped\n    environment:\n      MYSQL_DATABASE: laravel\n      MYSQL_USER: laravel\n      MYSQL_PASSWORD: secret\n      MYSQL_ROOT_PASSWORD: root\n    volumes:\n      - db_data:/var/lib/mysql\n    networks:\n      - laravel_net\n\n  redis:\n    image: redis:alpine\n    container_name: laravel_redis\n    ports:\n      - \"6379:6379\"\n    networks:\n      - laravel_net\n\nnetworks:\n  laravel_net:\n    driver: bridge\n\nvolumes:\n  db_data:",
+                tags: ['laravel', 'apache', 'mysql', 'redis']
+            },
+            {
+                title: 'LAMP Stack',
+                category: 'PHP',
+                description: 'Classic PHP + Apache + MySQL stack for local development.',
+                command: "version: '3.8'\n\nservices:\n  web:\n    image: php:8.3-apache\n    container_name: lamp_web\n    ports:\n      - \"8080:80\"\n    volumes:\n      - .:/var/www/html\n    depends_on:\n      - db\n    networks:\n      - lamp_net\n\n  db:\n    image: mysql:8.0\n    container_name: lamp_db\n    restart: unless-stopped\n    environment:\n      MYSQL_DATABASE: app_db\n      MYSQL_USER: app_user\n      MYSQL_PASSWORD: app_pass\n      MYSQL_ROOT_PASSWORD: root\n    ports:\n      - \"3306:3306\"\n    volumes:\n      - db_data:/var/lib/mysql\n    networks:\n      - lamp_net\n\n  phpmyadmin:\n    image: phpmyadmin/phpmyadmin\n    container_name: lamp_pma\n    ports:\n      - \"8081:80\"\n    environment:\n      PMA_HOST: db\n      MYSQL_ROOT_PASSWORD: root\n    depends_on:\n      - db\n    networks:\n      - lamp_net\n\nnetworks:\n  lamp_net:\n    driver: bridge\n\nvolumes:\n  db_data:",
+                tags: ['lamp', 'php', 'apache', 'mysql']
+            },
+            {
+                title: 'Node.js + Express + MongoDB + Redis',
+                category: 'Node',
+                description: 'Node application with Express, MongoDB, and Redis for caching/session use.',
+                command: "version: '3.8'\n\nservices:\n  app:\n    build:\n      context: .\n      dockerfile: Dockerfile\n    container_name: node_app\n    working_dir: /usr/src/app\n    volumes:\n      - .:/usr/src/app\n    ports:\n      - \"3000:3000\"\n    environment:\n      NODE_ENV: development\n      MONGO_URI: mongodb://mongo:27017/appdb\n      REDIS_URI: redis://redis:6379\n    depends_on:\n      - mongo\n      - redis\n    command: npm run dev\n    networks:\n      - node_net\n\n  mongo:\n    image: mongo:6\n    container_name: node_mongo\n    restart: unless-stopped\n    ports:\n      - \"27017:27017\"\n    volumes:\n      - mongo_data:/data/db\n    networks:\n      - node_net\n\n  redis:\n    image: redis:alpine\n    container_name: node_redis\n    ports:\n      - \"6379:6379\"\n    networks:\n      - node_net\n\nnetworks:\n  node_net:\n    driver: bridge\n\nvolumes:\n  mongo_data:",
+                tags: ['node', 'express', 'mongo', 'redis']
+            },
+            {
+                title: 'React + Node API + PostgreSQL + Redis',
+                category: 'Full Stack',
+                description: 'Frontend and backend separated with PostgreSQL and Redis.',
+                command: "version: '3.8'\n\nservices:\n  frontend:\n    image: node:20-alpine\n    container_name: react_frontend\n    working_dir: /app\n    volumes:\n      - ./frontend:/app\n    ports:\n      - \"5173:5173\"\n    command: sh -c \"npm install && npm run dev -- --host 0.0.0.0\"\n    networks:\n      - app_net\n\n  api:\n    build:\n      context: ./api\n      dockerfile: Dockerfile\n    container_name: express_api\n    working_dir: /usr/src/app\n    volumes:\n      - ./api:/usr/src/app\n    ports:\n      - \"4000:4000\"\n    environment:\n      DATABASE_URL: postgres://postgres:secret@db:5432/appdb\n      REDIS_URL: redis://redis:6379\n    depends_on:\n      - db\n      - redis\n    networks:\n      - app_net\n\n  db:\n    image: postgres:15\n    container_name: react_postgres\n    restart: unless-stopped\n    environment:\n      POSTGRES_DB: appdb\n      POSTGRES_USER: postgres\n      POSTGRES_PASSWORD: secret\n    ports:\n      - \"5432:5432\"\n    volumes:\n      - pg_data:/var/lib/postgresql/data\n    networks:\n      - app_net\n\n  redis:\n    image: redis:alpine\n    container_name: react_redis\n    ports:\n      - \"6379:6379\"\n    networks:\n      - app_net\n\nnetworks:\n  app_net:\n    driver: bridge\n\nvolumes:\n  pg_data:",
+                tags: ['react', 'node', 'postgresql', 'redis']
+            },
+            {
+                title: 'WordPress + MySQL + phpMyAdmin',
+                category: 'CMS',
+                description: 'A WordPress local environment with database and admin UI.',
+                command: "version: '3.8'\n\nservices:\n  wordpress:\n    image: wordpress:latest\n    container_name: wordpress_app\n    restart: unless-stopped\n    ports:\n      - \"8080:80\"\n    environment:\n      WORDPRESS_DB_HOST: db\n      WORDPRESS_DB_USER: wordpress\n      WORDPRESS_DB_PASSWORD: secret\n      WORDPRESS_DB_NAME: wordpress\n    volumes:\n      - wp_data:/var/www/html\n    depends_on:\n      - db\n    networks:\n      - wp_net\n\n  db:\n    image: mysql:8.0\n    container_name: wordpress_db\n    restart: unless-stopped\n    environment:\n      MYSQL_DATABASE: wordpress\n      MYSQL_USER: wordpress\n      MYSQL_PASSWORD: secret\n      MYSQL_ROOT_PASSWORD: root\n    volumes:\n      - db_data:/var/lib/mysql\n    networks:\n      - wp_net\n\n  phpmyadmin:\n    image: phpmyadmin/phpmyadmin\n    container_name: wordpress_pma\n    restart: unless-stopped\n    ports:\n      - \"8081:80\"\n    environment:\n      PMA_HOST: db\n      MYSQL_ROOT_PASSWORD: root\n    depends_on:\n      - db\n    networks:\n      - wp_net\n\nnetworks:\n  wp_net:\n    driver: bridge\n\nvolumes:\n  db_data:\n  wp_data:",
+                tags: ['wordpress', 'mysql', 'phpmyadmin']
+            },
+            {
+                title: 'Spring Boot + PostgreSQL + pgAdmin',
+                category: 'Java',
+                description: 'Java backend with PostgreSQL and a database admin interface.',
+                command: "version: '3.8'\n\nservices:\n  app:\n    build:\n      context: .\n      dockerfile: Dockerfile\n    container_name: spring_app\n    ports:\n      - \"8080:8080\"\n    environment:\n      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/appdb\n      SPRING_DATASOURCE_USERNAME: postgres\n      SPRING_DATASOURCE_PASSWORD: secret\n    depends_on:\n      - db\n    networks:\n      - java_net\n\n  db:\n    image: postgres:15\n    container_name: spring_db\n    restart: unless-stopped\n    environment:\n      POSTGRES_DB: appdb\n      POSTGRES_USER: postgres\n      POSTGRES_PASSWORD: secret\n    volumes:\n      - pg_data:/var/lib/postgresql/data\n    networks:\n      - java_net\n\n  pgadmin:\n    image: dpage/pgadmin4\n    container_name: spring_pgadmin\n    environment:\n      PGADMIN_DEFAULT_EMAIL: admin@example.com\n      PGADMIN_DEFAULT_PASSWORD: admin\n    ports:\n      - \"5050:80\"\n    depends_on:\n      - db\n    networks:\n      - java_net\n\nnetworks:\n  java_net:\n    driver: bridge\n\nvolumes:\n  pg_data:",
+                tags: ['spring', 'java', 'postgresql', 'pgadmin']
+            },
+            {
+                title: 'Python Flask + PostgreSQL + Redis',
+                category: 'Python',
+                description: 'A Python API stack with PostgreSQL persistence and Redis cache.',
+                command: "version: '3.8'\n\nservices:\n  api:\n    build:\n      context: .\n      dockerfile: Dockerfile\n    container_name: flask_api\n    ports:\n      - \"5000:5000\"\n    environment:\n      FLASK_APP: app.py\n      DATABASE_URL: postgresql://postgres:secret@db:5432/flaskdb\n      REDIS_URL: redis://redis:6379/0\n    depends_on:\n      - db\n      - redis\n    networks:\n      - python_net\n\n  db:\n    image: postgres:15\n    container_name: flask_db\n    restart: unless-stopped\n    environment:\n      POSTGRES_DB: flaskdb\n      POSTGRES_USER: postgres\n      POSTGRES_PASSWORD: secret\n    volumes:\n      - pg_data:/var/lib/postgresql/data\n    networks:\n      - python_net\n\n  redis:\n    image: redis:alpine\n    container_name: flask_redis\n    ports:\n      - \"6379:6379\"\n    networks:\n      - python_net\n\nnetworks:\n  python_net:\n    driver: bridge\n\nvolumes:\n  pg_data:",
+                tags: ['python', 'flask', 'postgresql', 'redis']
+            },
+            {
+                title: 'Docker Compose for .NET + SQL Server + Redis',
+                category: '.NET',
+                description: 'ASP.NET application with SQL Server and Redis support.',
+                command: "version: '3.8'\n\nservices:\n  api:\n    build:\n      context: .\n      dockerfile: Dockerfile\n    container_name: dotnet_api\n    ports:\n      - \"5001:80\"\n    environment:\n      ConnectionStrings__DefaultConnection: Server=db;Database=AppDb;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True\n      REDIS_URL: redis://redis:6379\n    depends_on:\n      - db\n      - redis\n    networks:\n      - dotnet_net\n\n  db:\n    image: mcr.microsoft.com/mssql/server:2022-latest\n    container_name: dotnet_db\n    environment:\n      ACCEPT_EULA: 'Y'\n      MSSQL_SA_PASSWORD: 'YourStrong!Passw0rd'\n    ports:\n      - \"1433:1433\"\n    volumes:\n      - sql_data:/var/opt/mssql\n    networks:\n      - dotnet_net\n\n  redis:\n    image: redis:alpine\n    container_name: dotnet_redis\n    ports:\n      - \"6379:6379\"\n    networks:\n      - dotnet_net\n\nnetworks:\n  dotnet_net:\n    driver: bridge\n\nvolumes:\n  sql_data:",
+                tags: ['dotnet', 'sqlserver', 'redis']
+            }
+        ];
+
+        const commandGrid = document.getElementById('commandGrid');
+        const countLabel = document.getElementById('commandCount');
+        const searchInput = document.getElementById('toolSearch');
+        const toast = document.getElementById('toast');
+
+        function showToast() {
+            if (!toast) return;
+            toast.classList.add('show');
+            clearTimeout(showToast.timeoutId);
+            showToast.timeoutId = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 1400);
+        }
+
+        function renderCommands(list) {
+            commandGrid.innerHTML = '';
+
+            if (!list.length) {
+                const empty = document.createElement('div');
+                empty.className = 'empty-state';
+                empty.textContent = 'No matching Docker Compose files found.';
+                commandGrid.appendChild(empty);
+                countLabel.textContent = '0 commands';
+                return;
+            }
+
+            countLabel.textContent = `${list.length} commands`;
+
+            list.forEach((item, index) => {
+                const article = document.createElement('article');
+                article.className = 'command-card glass-card';
+                article.style.animationDelay = `${index * 60}ms`;
+
+                const topbar = document.createElement('div');
+                topbar.className = 'command-topbar';
+
+                const lights = document.createElement('div');
+                lights.className = 'traffic-lights';
+                lights.innerHTML = '<span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>';
+
+                const label = document.createElement('span');
+                label.className = 'command-label';
+                label.textContent = item.category;
+
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-btn';
+                copyButton.type = 'button';
+                copyButton.textContent = 'Copy';
+                copyButton.dataset.command = item.command;
+
+                const body = document.createElement('div');
+                body.className = 'command-body';
+
+                const badge = document.createElement('span');
+                badge.className = 'command-badge';
+                badge.textContent = item.category;
+
+                const h3 = document.createElement('h3');
+                h3.textContent = item.title;
+
+                const description = document.createElement('p');
+                description.textContent = item.description;
+
+                const pre = document.createElement('pre');
+                pre.className = 'command-code';
+                const code = document.createElement('code');
+                code.textContent = item.command;
+                pre.appendChild(code);
+
+                topbar.appendChild(lights);
+                topbar.appendChild(label);
+                topbar.appendChild(copyButton);
+
+                body.appendChild(badge);
+                body.appendChild(h3);
+                body.appendChild(description);
+                body.appendChild(pre);
+
+                article.appendChild(topbar);
+                article.appendChild(body);
+                commandGrid.appendChild(article);
+            });
+
+            bindCopyButtons();
+        }
+
+        function bindCopyButtons() {
+            document.querySelectorAll('.copy-btn').forEach((button) => {
+                button.addEventListener('click', async () => {
+                    const command = button.dataset.command;
+                    const oldText = button.textContent;
+
+                    try {
+                        await navigator.clipboard.writeText(command);
+                        button.textContent = 'Copied!';
+                        showToast();
+                    } catch (error) {
+                        const temp = document.createElement('textarea');
+                        temp.value = command;
+                        document.body.appendChild(temp);
+                        temp.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(temp);
+                        button.textContent = 'Copied!';
+                        showToast();
+                    }
+
+                    button.disabled = true;
+                    setTimeout(() => {
+                        button.disabled = false;
+                        button.textContent = oldText;
+                    }, 1200);
+                });
+            });
+        }
+
+        function filterCommands() {
+            const term = (searchInput.value || '').trim().toLowerCase();
+
+            if (!term) {
+                renderCommands(artisanCommands);
+                return;
+            }
+
+            const filtered = artisanCommands.filter((item) => {
+                const searchable = [
+                    item.title,
+                    item.category,
+                    item.description,
+                    item.command,
+                    ...(item.tags || [])
+                ].join(' ').toLowerCase();
+
+                return searchable.includes(term);
+            });
+
+            renderCommands(filtered);
+        }
+
+        searchInput.addEventListener('input', filterCommands);
+        renderCommands(artisanCommands);
+    </script>
+
+</body>
+
+</html>
