@@ -72,6 +72,39 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
-    font-size: 2.5rem;
-    font-weight: bold;
+    font-size: 2rem;
+    font-family: 'Orbitron', 'Montserrat', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+
+
+/* Gradient styling for SPLASH text to match logo cyan-blue gradient */
+.splash-text {
+    background: linear-gradient(135deg, #ffffff 0%, #00f2fe 50%, #0072ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+}
+
+/* Clean white typography for TOOLS text with slight glow */
+.tools-text {
+    color: #ffffff;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Interactive hover effect for code snippet elements */
+.glass-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(0, 242, 254, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 242, 254, 0.15);
 }
