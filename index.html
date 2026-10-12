@@ -17,6 +17,25 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/dashboard.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .platform-icons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .platform-icons i {
+            font-size: 2.5rem;
+        }
+
+        .platform-icons svg {
+            width: 2.5rem;
+            height: 2.5rem;
+            transform: rotate(60deg);
+        }
+    </style>
 </head>
 
 <body>
@@ -33,7 +52,8 @@
         </div>
     </nav>
 
-    <main class="hero-shell flex-grow max-w-7xl mx-auto px-4 sm:px-8 py-12 flex flex-col justify-center items-center text-center">
+    <main
+        class="hero-shell flex-grow max-w-7xl mx-auto px-4 sm:px-8 py-12 flex flex-col justify-center items-center text-center">
         <div class="floating-orb orb-one"></div>
         <div class="floating-orb orb-two"></div>
 
@@ -66,7 +86,8 @@
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#docker">Docker</button>
                 </li>
                 <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#installation">Installation</button>
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#installation">Software
+                        Installation</button>
                 </li>
             </ul>
         </div>
@@ -75,9 +96,11 @@
             <div class="tab-pane fade show active" id="all">
                 <div class="card-list">
                     <a href="laravel-artisan-commands.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="laravel artisan" data-category="laravel" data-tags="laravel, artisan, commands" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="laravel artisan" data-category="laravel"
+                            data-tags="laravel, artisan, commands" style="max-width: 20rem;">
                             <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-laravel-original colored" style="font-size: 4rem;"></i>
                                 </div>
                                 <div class="col-md-8">
@@ -91,9 +114,11 @@
                     </a>
 
                     <a href="docker-file-code.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker" data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker"
+                            data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
                             <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-docker-plain colored" style="font-size: 4rem;"></i>
                                 </div>
                                 <div class="col-md-8">
@@ -107,9 +132,11 @@
                     </a>
 
                     <a href="docker-compose-file-code.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="docker compose generator" data-category="docker" data-tags="docker, compose, generator" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="docker compose generator" data-category="docker"
+                            data-tags="docker, compose, generator" style="max-width: 20rem;">
                             <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-docker-plain colored" style="font-size: 4rem;"></i>
                                 </div>
                                 <div class="col-md-8">
@@ -123,9 +150,11 @@
                     </a>
 
                     <a href="docker-install-windows.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="windows installation" data-category="windows" data-tags="windows, installation" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="windows installation" data-category="windows"
+                            data-tags="windows, installation" style="max-width: 20rem;">
                             <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-docker-plain colored" style="font-size: 3rem;"></i>
                                     <i class="devicon-windows8-plain colored" style="font-size: 3rem;"></i>
                                 </div>
@@ -140,9 +169,11 @@
                     </a>
 
                     <a href="docker-install-ubuntu.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker" data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker"
+                            data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
                             <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-docker-plain colored" style="font-size: 3rem;"></i>
                                     <i class="devicon-ubuntu-plain colored" style="font-size: 3rem;"></i>
                                 </div>
@@ -157,9 +188,11 @@
                     </a>
 
                     <a href="docker-install-macos.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker" data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker"
+                            data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
                             <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-docker-plain colored" style="font-size: 3rem;"></i>
                                     <i class="devicon-apple-plain" style="font-size: 3rem; color: white;"></i>
                                 </div>
@@ -173,15 +206,87 @@
                         </div>
                     </a>
 
+
+                    <a href="chrome-install-windows.html" class="scroll-reveal" target="_blank">
+                        <div class="card mb-3 tool-card" data-name="windows installation" data-category="windows"
+                            data-tags="windows, installation" style="max-width: 20rem;">
+                            <div class="row g-0">
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
+                                    <div class="platform-icons" aria-label="Google Chrome for Windows">
+                                        <svg viewBox="0 0 100 100" role="img" aria-label="Google Chrome">
+                                            <defs>
+                                                <clipPath id="chrome-logo-clip">
+                                                    <circle cx="50" cy="50" r="50"></circle>
+                                                </clipPath>
+                                            </defs>
+                                            <g clip-path="url(#chrome-logo-clip)">
+                                                <circle cx="50" cy="50" r="50" fill="#ea4335"></circle>
+                                                <path d="M50 50V0a50 50 0 0 1 43.3 75Z" fill="#fbbc05"></path>
+                                                <path d="M50 50 93.3 75A50 50 0 0 1 6.7 75Z" fill="#34a853"></path>
+                                            </g>
+                                            <circle cx="50" cy="50" r="25" fill="#fff"></circle>
+                                            <circle cx="50" cy="50" r="20" fill="#4285f4"></circle>
+                                        </svg>
+                                        <i class="devicon-windows8-plain colored" aria-label="Windows"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Chrome on Windows</h5>
+                                        <p class="card-text">Installation instructions for Google Chrome on Windows</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="chrome-install-ubuntu.html" class="scroll-reveal" target="_blank">
+                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker"
+                            data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
+                            <div class="row g-0">
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
+                                    <div class="platform-icons" aria-label="Google Chrome for Windows">
+                                        <svg viewBox="0 0 100 100" role="img" aria-label="Google Chrome">
+                                            <defs>
+                                                <clipPath id="chrome-logo-clip">
+                                                    <circle cx="50" cy="50" r="50"></circle>
+                                                </clipPath>
+                                            </defs>
+                                            <g clip-path="url(#chrome-logo-clip)">
+                                                <circle cx="50" cy="50" r="50" fill="#ea4335"></circle>
+                                                <path d="M50 50V0a50 50 0 0 1 43.3 75Z" fill="#fbbc05"></path>
+                                                <path d="M50 50 93.3 75A50 50 0 0 1 6.7 75Z" fill="#34a853"></path>
+                                            </g>
+                                            <circle cx="50" cy="50" r="25" fill="#fff"></circle>
+                                            <circle cx="50" cy="50" r="20" fill="#4285f4"></circle>
+                                        </svg>
+                                        <i class="devicon-ubuntu-plain colored" aria-label="Ubuntu"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Chrome on Ubuntu</h5>
+                                        <p class="card-text">Installation instructions for Google Chrome on Ubuntu</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+
                 </div>
             </div>
 
             <div class="tab-pane fade" id="laravel">
                 <div class="card-list">
                     <a href="laravel-artisan-commands.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="laravel artisan" data-category="laravel" data-tags="laravel, artisan, commands" style="max-width: 20rem;">
+                        <div class="card mb-3 tool-card" data-name="laravel artisan" data-category="laravel"
+                            data-tags="laravel, artisan, commands" style="max-width: 20rem;">
                             <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-laravel-original colored" style="font-size: 4rem;"></i>
                                 </div>
                                 <div class="col-md-8">
@@ -198,88 +303,44 @@
 
             <div class="tab-pane fade" id="docker">
                 <div class="card-list">
-                    <a href="docker-file-code.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker" data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
+
+                    <a href="docker-setup.html" class="scroll-reveal" target="_blank">
+                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker"
+                            data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
                             <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-docker-plain colored" style="font-size: 4rem;"></i>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title">Docker</h5>
-                                        <p class="card-text">Dockerfile Code Generator</p>
+                                        <h5 class="card-title">Docker Setup</h5>
+                                        <p class="card-text">Dockerfile Codes Generator</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </a>
 
-                    <a href="docker-compose-file-code.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="docker compose generator" data-category="docker" data-tags="docker, compose, generator" style="max-width: 20rem;">
+
+                    <a href="docker-installation-file.html" class="scroll-reveal" target="_blank">
+                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker"
+                            data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
                             <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-docker-plain colored" style="font-size: 4rem;"></i>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title">Docker</h5>
-                                        <p class="card-text">Docker Compose File Code</p>
+                                        <h5 class="card-title">Docker Installation</h5>
+                                        <p class="card-text">Docker installation instructions</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </a>
-
-                    <a href="docker-install-windows.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="windows installation" data-category="windows" data-tags="windows, installation" style="max-width: 20rem;">
-                            <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                                    <i class="devicon-docker-plain colored" style="font-size: 3rem;"></i>
-                                    <i class="devicon-windows8-plain colored" style="font-size: 3rem;"></i>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Docker on Windows</h5>
-                                        <p class="card-text">Installation instructions for Docker on Windows</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="docker-install-ubuntu.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker" data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
-                            <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                                    <i class="devicon-docker-plain colored" style="font-size: 3rem;"></i>
-                                    <i class="devicon-ubuntu-plain colored" style="font-size: 3rem;"></i>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Docker on Ubuntu</h5>
-                                        <p class="card-text">Installation instructions for Docker on Ubuntu</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="docker-install-macos.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker" data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
-                            <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                                    <i class="devicon-docker-plain colored" style="font-size: 3rem;"></i>
-                                    <i class="devicon-apple-plain" style="font-size: 3rem; color: white;"></i>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Docker on macOS</h5>
-                                        <p class="card-text">Installation instructions for Docker on macOS</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                    
 
                 </div>
             </div>
@@ -287,51 +348,69 @@
             <div class="tab-pane fade" id="installation">
                 <div class="card-list">
 
-                    <a href="docker-install-windows.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="windows installation" data-category="windows" data-tags="windows, installation" style="max-width: 20rem;">
+                    <a href="docker-installation-file.html" class="scroll-reveal" target="_blank">
+                        <div class="card mb-3 tool-card" data-name="windows installation" data-category="windows"
+                            data-tags="windows, installation" style="max-width: 20rem;">
                             <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
                                     <i class="devicon-docker-plain colored" style="font-size: 3rem;"></i>
-                                    <i class="devicon-windows8-plain colored" style="font-size: 3rem;"></i>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title">Docker on Windows</h5>
-                                        <p class="card-text">Installation instructions for Docker on Windows</p>
+                                        <h5 class="card-title">Docker Installation</h5>
+                                        <p class="card-text">Installation instructions for Docker</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </a>
 
-                    <a href="docker-install-ubuntu.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker" data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
+                    <a href="chrome-installation-file.html" class="scroll-reveal" target="_blank">
+                        <div class="card mb-3 tool-card" data-name="windows installation" data-category="windows"
+                            data-tags="windows, installation" style="max-width: 20rem;">
                             <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                                    <i class="devicon-docker-plain colored" style="font-size: 3rem;"></i>
-                                    <i class="devicon-ubuntu-plain colored" style="font-size: 3rem;"></i>
+                                <div class="col-md-4"
+                                    style="display: flex; align-items: center; justify-content: center;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        viewBox="0 0 48 48" height="48" width="48">
+                                        <defs>
+                                            <linearGradient id="a" x1="3.2173" y1="15" x2="44.7812" y2="15"
+                                                gradientUnits="userSpaceOnUse">
+                                                <stop offset="0" stop-color="#d93025" />
+                                                <stop offset="1" stop-color="#ea4335" />
+                                            </linearGradient>
+                                            <linearGradient id="b" x1="20.7219" y1="47.6791" x2="41.5039" y2="11.6837"
+                                                gradientUnits="userSpaceOnUse">
+                                                <stop offset="0" stop-color="#fcc934" />
+                                                <stop offset="1" stop-color="#fbbc04" />
+                                            </linearGradient>
+                                            <linearGradient id="c" x1="26.5981" y1="46.5015" x2="5.8161" y2="10.506"
+                                                gradientUnits="userSpaceOnUse">
+                                                <stop offset="0" stop-color="#1e8e3e" />
+                                                <stop offset="1" stop-color="#34a853" />
+                                            </linearGradient>
+                                        </defs>
+                                        <circle cx="24" cy="23.9947" r="12" style="fill:#fff" />
+                                        <path
+                                            d="M3.2154,36A24,24,0,1,0,12,3.2154,24,24,0,0,0,3.2154,36ZM34.3923,18A12,12,0,1,1,18,13.6077,12,12,0,0,1,34.3923,18Z"
+                                            style="fill:none" />
+                                        <path
+                                            d="M24,12H44.7812a23.9939,23.9939,0,0,0-41.5639.0029L13.6079,30l.0093-.0024A11.9852,11.9852,0,0,1,24,12Z"
+                                            style="fill:url(#a)" />
+                                        <circle cx="24" cy="24" r="9.5" style="fill:#1a73e8" />
+                                        <path
+                                            d="M34.3913,30.0029,24.0007,48A23.994,23.994,0,0,0,44.78,12.0031H23.9989l-.0025.0093A11.985,11.985,0,0,1,34.3913,30.0029Z"
+                                            style="fill:url(#b)" />
+                                        <path
+                                            d="M13.6086,30.0031,3.218,12.006A23.994,23.994,0,0,0,24.0025,48L34.3931,30.0029l-.0067-.0068a11.9852,11.9852,0,0,1-20.7778.007Z"
+                                            style="fill:url(#c)" />
+                                    </svg>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title">Docker on Ubuntu</h5>
-                                        <p class="card-text">Installation instructions for Docker on Ubuntu</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="docker-install-macos.html" class="scroll-reveal" target="_blank">
-                        <div class="card mb-3 tool-card" data-name="dockerfile generator" data-category="docker" data-tags="docker, dockerfile, generator" style="max-width: 20rem;">
-                            <div class="row g-0">
-                                <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
-                                    <i class="devicon-docker-plain colored" style="font-size: 3rem;"></i>
-                                    <i class="devicon-apple-plain" style="font-size: 3rem; color: white;"></i>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Docker on macOS</h5>
-                                        <p class="card-text">Installation instructions for Docker on macOS</p>
+                                        <h5 class="card-title">Google Chrome Installation</h5>
+                                        <p class="card-text">Installation instructions for Google Chrome</p>
                                     </div>
                                 </div>
                             </div>
@@ -350,7 +429,8 @@
                     <img src="images/logo.jpg" alt="Splash Tools logo" class="footer-logo" />
                     <span>Splash Tools</span>
                 </div>
-                <p>Smart snippets and reusable developer tools for faster builds, cleaner deployments, and smoother workflows.</p>
+                <p>Smart snippets and reusable developer tools for faster builds, cleaner deployments, and smoother
+                    workflows.</p>
             </div>
 
             <div class="footer-links">
